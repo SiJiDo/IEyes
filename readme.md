@@ -68,4 +68,4 @@ Usage of ./IEyes:
 ./IEyes -page 2 -n 北京通信管理局
 ```
 
-![img2](/Users/mi0/workplace/go-test/img/img2.png)
+![img2](img/img2.png)
