@@ -44,6 +44,10 @@ Usage of ./IEyes:
 ./IEyes -n 哔哩哔哩
 ```
 
+![img1](img/img1.png)
+
+
+
 例子2
 查询目标公司和子公司，并且持股比例大于50%的
 
@@ -64,6 +68,4 @@ Usage of ./IEyes:
 ./IEyes -page 2 -n 北京通信管理局
 ```
 
-![img1](img/img1.png)
-
-![img2](img/img2.png)
+![img2](/Users/mi0/workplace/go-test/img/img2.png)

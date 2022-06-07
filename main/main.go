@@ -119,26 +119,26 @@ func main() {
 	domainlist = RemoveRepeatedElement(domainlist)
 	applist = RemoveRepeatedElement(applist)
 	weixinlist = RemoveRepeatedElement(weixinlist)
+	if child == true {
+		//输出汇总结果
+		fmt.Println()
+		fmt.Println("[+]域名资产汇总")
+		fmt.Println("==================================")
 
-	//输出汇总结果
-	fmt.Println()
-	fmt.Println("[+]域名资产汇总")
-	fmt.Println("==================================")
-
-	for i := range domainlist {
-		fmt.Println(domainlist[i])
+		for i := range domainlist {
+			fmt.Println(domainlist[i])
+		}
+		fmt.Println()
+		fmt.Println("[+]app资产汇总")
+		fmt.Println("==================================")
+		for i := range applist {
+			fmt.Println(applist[i])
+		}
+		fmt.Println()
+		fmt.Println("[+]微信公众号资产汇总")
+		fmt.Println("==================================")
+		for i := range weixinlist {
+			fmt.Println(weixinlist[i])
+		}
 	}
-	fmt.Println()
-	fmt.Println("[+]app资产汇总")
-	fmt.Println("==================================")
-	for i := range applist {
-		fmt.Println(applist[i])
-	}
-	fmt.Println()
-	fmt.Println("[+]微信公众号资产汇总")
-	fmt.Println("==================================")
-	for i := range weixinlist {
-		fmt.Println(weixinlist[i])
-	}
-
 }

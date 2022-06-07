@@ -7,99 +7,97 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gocolly/colly"
 	"github.com/kirinlabs/HttpRequest"
 )
 
-//获取当前页面的id和公司
 func GetPage(auth_token string, name string, page int) ([]string, []string) {
-	//开始获取页面的公司和id号
-	fmt.Println("[+]开始获取页面的公司")
-
-	split1 := "/span></div></div></div><div class=\"search-item sv-search-company  \""
-	split2 := "&card_name="
-	split3 := "&card_type=公司&card_id="
-	spilit_id1 := "&card_type=公司&card_id="
-	spilit_id2 := "&item=公司&"
 	var idlist []string
 	var infolist []string
+
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("[-]爬取异常,程序退出")
+			os.Exit(0)
+		}
+	}()
 
 	for p := 1; p <= page; p++ {
 
 		url1 := "https://www.tianyancha.com/search/p" + strconv.Itoa(p) + "?key=" + url.QueryEscape(name)
-		req := HttpRequest.NewRequest()
-		req.SetCookies(map[string]string{
-			"auth_token": auth_token,
+
+		//初始化爬虫
+		c := colly.NewCollector(
+			colly.UserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:101.0) Gecko/20100101 Firefox/101.0"))
+
+		c.OnRequest(func(r *colly.Request) {
+			// Request头部设定
+			r.Headers.Set("Connection", "keep-alive")
+			r.Headers.Set("Accept", "*/*")
+			r.Headers.Set("Cookie", "auth_token="+auth_token)
+			r.Headers.Set("Accept-Language", "zh-CN, zh;q=0.9")
+
+			fmt.Println("Visiting", r.URL)
 		})
 
-		resp, err := req.Get(url1)
+		c.OnHTML("a", func(e *colly.HTMLElement) {
+			if e.Attr("class") == "index_alink__zcia5 link-click" {
 
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-
-		body, err := resp.Body()
-		r := strings.Split(string(body), split1)
-		flag := false
-
-		for s := range r {
-			var info string
-			var id string
-			if flag == false {
-				info = strings.Split(r[s], "<div class=\"xcx-qrcode\" tyc-xcx-qrcode></div><div class=\"info\">")[1]
-				info = strings.Split(info, "</div><div class=\"bottom\"><span>")[0]
-				fmt.Println(info)
-				flag = true
-			} else {
-				info = strings.Split(r[s], split2)[1]
-				info = strings.Split(info, split3)[0]
-				fmt.Println(info)
+				info := string(e.Text)
+				link := strings.Split(e.Attr("href"), "/")
+				id := link[len(link)-1]
+				idlist = append(idlist, id)
+				infolist = append(infolist, info)
 			}
-			id = strings.Split(r[s], spilit_id1)[1]
-			id = strings.Split(id, spilit_id2)[0]
+		})
 
-			idlist = append(idlist, id)
-			infolist = append(infolist, info)
-		}
+		c.Visit(url1)
 	}
-	fmt.Println()
+
 	return idlist, infolist
 }
 
 func GetFirstCompany(auth_token string, name string) ([]string, []string) {
 
 	//开始获取页面的公司和id号
+	url1 := "https://www.tianyancha.com/search?key=" + url.QueryEscape(name)
+	id := ""
+	info := ""
+
 	fmt.Println("[+]开始准备获取当前公司名称")
 
-	split1 := "/span></div></div></div><div class=\"search-item sv-search-company  \""
-	split2 := "<div class=\"xcx-qrcode\" tyc-xcx-qrcode></div><div class=\"info\">"
-	split3 := "</div><div class=\"bottom\"><span>"
-	spilit_id1 := "&card_type=公司&card_id="
-	spilit_id2 := "&item=公司&"
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("[-]爬取异常,程序退出")
+			os.Exit(0)
+		}
+	}()
 
-	url1 := "https://www.tianyancha.com/search?key=" + url.QueryEscape(name)
-	req := HttpRequest.NewRequest()
-	req.SetCookies(map[string]string{
-		"auth_token": auth_token,
+	//初始化爬虫
+	c := colly.NewCollector(
+		colly.UserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:101.0) Gecko/20100101 Firefox/101.0"))
+
+	c.OnRequest(func(r *colly.Request) {
+		// Request头部设定
+		r.Headers.Set("Connection", "keep-alive")
+		r.Headers.Set("Accept", "*/*")
+		r.Headers.Set("Cookie", "auth_token="+auth_token)
+		r.Headers.Set("Accept-Language", "zh-CN, zh;q=0.9")
+
+		fmt.Println("Visiting", r.URL)
 	})
 
-	resp, err := req.Get(url1)
+	c.OnHTML("a", func(e *colly.HTMLElement) {
+		if e.Attr("class") == "index_alink__zcia5 link-click" {
+			if id == "" && info == "" {
+				info = string(e.Text)
+				link := strings.Split(e.Attr("href"), "/")
+				id = link[len(link)-1]
+			}
+		}
+	})
 
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	body, err := resp.Body()
-
-	info := strings.Split(string(body), split2)[1]
-	info = strings.Split(info, split3)[0]
-
-	id := strings.Split(string(body), split1)[0]
-	id = strings.Split(string(id), spilit_id1)[1]
-	id = strings.Split(string(id), spilit_id2)[0]
-	fmt.Println(info)
-	fmt.Println()
+	c.Visit(url1)
 
 	return []string{id}, []string{info}
 
