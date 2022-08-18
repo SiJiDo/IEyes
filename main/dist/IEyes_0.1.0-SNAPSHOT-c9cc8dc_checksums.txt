@@ -1,4 +1,0 @@
-0b7c67a65b969580c1ff2ac9c0991d272a9891c4aee3d489aa7852cacea7c1e7  IEyes_0.1.0-SNAPSHOT-c9cc8dc_linux_386.tar.gz
-36990b841182e08e540927007ae7ca6e0d268e0a9ba9a9785ca8ec193bf1f83c  IEyes_0.1.0-SNAPSHOT-c9cc8dc_linux_arm64.tar.gz
-7a1af7befbf8c192c74af221b4c01292de2e2bd455b71d0232a240e08198b48f  IEyes_0.1.0-SNAPSHOT-c9cc8dc_linux_amd64.tar.gz
-c1ba93d0fbd90add73264251e49a183d66e10d65ad886f03785f3d6cc9e063a0  IEyes_0.1.0-SNAPSHOT-c9cc8dc_darwin_amd64.tar.gz
