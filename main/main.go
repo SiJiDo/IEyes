@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 
@@ -66,6 +68,7 @@ func main() {
 	var child bool
 	var rate int
 	var deep int
+	var filename string
 	var id []string
 	var company []string
 	var domainlist []string
@@ -78,6 +81,7 @@ func main() {
 	flag.BoolVar(&child, "child", false, "是否查询子公司,默认为false")
 	flag.IntVar(&rate, "rate", 90, "控股比例,默认为90%控股")
 	flag.IntVar(&deep, "deep", 1, "子公司查询递归深度,默认为1")
+	flag.StringVar(&filename, "f", "", "从文件中获取目标资产信息")
 	flag.Parse()
 
 	f, err := os.Open("config.yaml")
@@ -86,11 +90,35 @@ func main() {
 	}
 	f.Close()
 
-	if page != 0 {
-		id, company = GetPage(auth_token, name, page)
-	} else {
-		id, company = GetFirstCompany(auth_token, name)
+	if filename == "" {
+		if page != 0 {
+			id, company = GetPage(auth_token, name, page)
+		} else {
+			id, company = GetFirstCompany(auth_token, name)
+		}
+	} else { //从文件中读取目标
+		file, err := os.Open(filename)
+
+		if err != nil {
+			fmt.Println("file错误信息:", err)
+		}
+		reader := bufio.NewReader(file)
+		//循环读取文件信息
+		for {
+			name, err := reader.ReadString('\n') // 读到一个换行就结束
+			idtmp, companytmp := GetFirstCompany(auth_token, name)
+			if name != "" {
+				id = append(id, idtmp...)
+				company = append(company, companytmp...)
+				fmt.Println("id:" + idtmp[0] + ",compay:" + companytmp[0])
+			}
+			if err == io.EOF { //io.EOF 表示文件的末尾
+				break
+			}
+			//输出内容ls
+		}
 	}
+	fmt.Println("开始收集资产")
 	for i := range id {
 		domainlist = GetDomain(id[i], company[i], auth_token)
 		applist = Getapp(id[i], company[i], auth_token)
