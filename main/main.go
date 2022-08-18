@@ -106,8 +106,8 @@ func main() {
 		//循环读取文件信息
 		for {
 			name, err := reader.ReadString('\n') // 读到一个换行就结束
-			idtmp, companytmp := GetFirstCompany(auth_token, name)
 			if name != "" {
+				idtmp, companytmp := GetFirstCompany(auth_token, name)
 				id = append(id, idtmp...)
 				company = append(company, companytmp...)
 				fmt.Println("id:" + idtmp[0] + ",compay:" + companytmp[0])
