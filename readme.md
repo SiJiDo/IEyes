@@ -27,15 +27,17 @@
 ```
 Usage of ./IEyes:
   -child
-        是否查询子公司,默认为false
+    	是否查询子公司,默认为false
   -deep int
-        子公司查询递归深度,默认为1 (default 1)
+    	子公司查询递归深度,默认为1 (default 1)
+  -f string
+    	从文件中获取目标资产信息
   -n string
-        查询目标名称
+    	查询目标名称
   -page int
-        查询页面数
+    	查询页面数
   -rate int
-        控股比例,默认为90%控股 (default 90)
+    	控股比例,默认为90%控股 (default 90)
 ```
 
 例子1
@@ -54,6 +56,7 @@ Usage of ./IEyes:
 ```
 ./IEyes -child -rate 50 -n 绿盟科技
 ```
+![img2](img/img2.png)
 
 例子3
 查询目标公司和子公司，包含子公司的子公司，如果要查三层子公司可以使用`-deep 3`，一次类推
@@ -68,4 +71,17 @@ Usage of ./IEyes:
 ./IEyes -page 2 -n 北京通信管理局
 ```
 
-![img2](/Users/mi0/workplace/go-test/img/img2.png)
+![img3](img/img3.png)
+
+例子5
+根据文件内容批量查询
+
+```
+./IEyes -f tmp.txt
+```
+
+![img4](img/img4.png)
+
+这个模式会先搜索文本中每行在天眼查的第一个返回内容，全部搜索完毕后，会进行备案等信息查询，但这里因为某些县级单位太小了可能搜不到会有在天眼查第一行出现其他的单位，因此还需要人工进行次复选
+
+![img5](img/img5.png)

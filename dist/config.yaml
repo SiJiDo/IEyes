@@ -29,8 +29,10 @@ builds:
   - linux_arm64
   - linux_386
   - windows_amd64
+  - windows_arm64
   - windows_386
   - darwin_amd64
+  - darwin_arm64
   dir: .
   main: .
   ldflags:
