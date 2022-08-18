@@ -20,6 +20,7 @@
 #### 配置
 整个查询需要用到天眼查的cookie，这个cookie经过我测试发现有效性可长达一个月，并且只需要auth_token这个字段就可以了，因此在第一运行该程序后，会生成一个config.yaml文件，将cookie的值填入其他即可(不需要cookie名，只需要值)
 
+![img1](img/img6.png)
 
 
 #### 使用方法
