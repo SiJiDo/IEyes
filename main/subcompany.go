@@ -9,7 +9,7 @@ import (
 	"github.com/kirinlabs/HttpRequest"
 )
 
-//获取子公司(集团内)
+// 获取子公司(集团内)
 func GetChildCompany_jt(id string, auth_token string, srate int) ([]string, []string, []string) {
 
 	fmt.Println("[+]开始获取子公司信息")
@@ -30,6 +30,9 @@ func GetChildCompany_jt(id string, auth_token string, srate int) ([]string, []st
 		req := HttpRequest.NewRequest()
 		req.SetCookies(map[string]string{
 			"auth_token": auth_token,
+		})
+		req.SetHeaders(map[string]string{
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
 		})
 
 		resp, err := req.Get(url1)
@@ -80,7 +83,7 @@ func GetChildCompany_jt(id string, auth_token string, srate int) ([]string, []st
 	return domainlist, applist, weixinlist
 }
 
-//获取子公司(大厂)
+// 获取子公司(大厂)
 func GetChildCompany_dc(id string, auth_token string, srate int) ([]string, []string, []string) {
 
 	fmt.Println("[+]开始获取子公司信息")
@@ -101,6 +104,9 @@ func GetChildCompany_dc(id string, auth_token string, srate int) ([]string, []st
 		req := HttpRequest.NewRequest()
 		req.SetCookies(map[string]string{
 			"auth_token": auth_token,
+		})
+		req.SetHeaders(map[string]string{
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
 		})
 
 		resp, err := req.Get(url1)
@@ -152,7 +158,7 @@ func GetChildCompany_dc(id string, auth_token string, srate int) ([]string, []st
 	return domainlist, applist, weixinlist
 }
 
-//获取子公司(国企)，需要递归
+// 获取子公司(国企)，需要递归
 func GetChildCompany_gq(id string, auth_token string, srate int, deep int) ([]string, []string, []string) {
 
 	fmt.Println("[+]开始获取子公司信息")
@@ -174,6 +180,9 @@ func GetChildCompany_gq(id string, auth_token string, srate int, deep int) ([]st
 		req := HttpRequest.NewRequest()
 		req.SetCookies(map[string]string{
 			"auth_token": auth_token,
+		})
+		req.SetHeaders(map[string]string{
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
 		})
 
 		resp, err := req.Get(url1)
@@ -247,7 +256,7 @@ func GetChildCompany_gq(id string, auth_token string, srate int, deep int) ([]st
 	return domainlist, applist, weixinlist
 }
 
-//获取子公司(银行类支行)
+// 获取子公司(银行类支行)
 func GetChildCompany_yh(id string, auth_token string, srate int) ([]string, []string, []string) {
 
 	fmt.Println("[+]开始获取子公司信息")
@@ -266,6 +275,9 @@ func GetChildCompany_yh(id string, auth_token string, srate int) ([]string, []st
 		req := HttpRequest.NewRequest()
 		req.SetCookies(map[string]string{
 			"auth_token": auth_token,
+		})
+		req.SetHeaders(map[string]string{
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
 		})
 
 		resp, err := req.Get(url1)

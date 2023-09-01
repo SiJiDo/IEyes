@@ -36,6 +36,7 @@ func GetPage(auth_token string, name string, page int) ([]string, []string) {
 			r.Headers.Set("Accept", "*/*")
 			r.Headers.Set("Cookie", "auth_token="+auth_token)
 			r.Headers.Set("Accept-Language", "zh-CN, zh;q=0.9")
+			r.Headers.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
 
 			fmt.Println("Visiting", r.URL)
 		})
@@ -83,6 +84,7 @@ func GetFirstCompany(auth_token string, name string) ([]string, []string) {
 		r.Headers.Set("Accept", "*/*")
 		r.Headers.Set("Cookie", "auth_token="+auth_token)
 		r.Headers.Set("Accept-Language", "zh-CN, zh;q=0.9")
+		r.Headers.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
 
 		fmt.Println("Visiting", r.URL)
 	})
@@ -98,6 +100,7 @@ func GetFirstCompany(auth_token string, name string) ([]string, []string) {
 	})
 
 	c.Visit(url1)
+	//fmt.Println(id, info)
 
 	return []string{id}, []string{info}
 
@@ -122,9 +125,13 @@ func GetDomain(id string, company string, auth_token string) []string {
 
 	for page > 0 {
 		url1 := "https://www.tianyancha.com/pagination/icp.xhtml?id=" + id + "&pn=" + strconv.Itoa(page)
+		//fmt.Println(url1)
 		req := HttpRequest.NewRequest()
 		req.SetCookies(map[string]string{
 			"auth_token": auth_token,
+		})
+		req.SetHeaders(map[string]string{
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
 		})
 
 		resp, err := req.Get(url1)
@@ -134,6 +141,7 @@ func GetDomain(id string, company string, auth_token string) []string {
 			os.Exit(1)
 		}
 		body, err := resp.Body()
+		//fmt.Println(string(body))
 
 		if strings.Contains(string(body), "<div") == false {
 			return domainlist
@@ -193,6 +201,9 @@ func Getweixin(id string, company string, auth_token string) []string {
 		req.SetCookies(map[string]string{
 			"auth_token": auth_token,
 		})
+		req.SetHeaders(map[string]string{
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
+		})
 
 		resp, err := req.Get(url1)
 
@@ -244,6 +255,9 @@ func Getapp(id string, company string, auth_token string) []string {
 		req := HttpRequest.NewRequest()
 		req.SetCookies(map[string]string{
 			"auth_token": auth_token,
+		})
+		req.SetHeaders(map[string]string{
+			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
 		})
 
 		resp, err := req.Get(url1)
